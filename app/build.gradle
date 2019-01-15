@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+//1. 定义 config 变量
+def config = rootProject.ext
+
+android {
+    //2. SdkVersion 的导入方式，直接在各关键字后面加上定义的变量名
+    compileSdkVersion config.android.compileSdkVersion
+    buildToolsVersion config.android.buildToolsVersion
+    defaultConfig {
+        applicationId "com.wangzl.arouterbase"
+        minSdkVersion config.android.minSdkVersion
+        targetSdkVersion config.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    //3. 依赖包的引入方式，在关键字后面加上 config.dependencies，最后用括号包裹定义的变量名。
+    compile config.dependencies["support-v7"]
+    testCompile config.dependencies["junit"]
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //在app壳中，只需要引入业务组件即可
+    if (isNeedHomeModule.toBoolean()) {
+        compile project(":module_home")
+    }
+    if (isNeedOtherModule.toBoolean()) {
+        compile project(":module_other")
+    }
+    if (isNeedMineModule.toBoolean()) {
+        compile project(":module_mine")
+    }
+}

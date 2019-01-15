@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+
+//1. 定义 config 变量
+def config = rootProject.ext
+
+android {
+    //2. SdkVersion 的导入方式，直接在各关键字后面加上定义的变量名
+    compileSdkVersion config.android.compileSdkVersion
+    buildToolsVersion config.android.buildToolsVersion
+
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        minSdkVersion config.android.minSdkVersion
+        targetSdkVersion config.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //在基础组件中，需要导入路由的运行期、编译期依赖库。
+    compile config.dependencies["arouter-api"]
+    annotationProcessor config.dependencies["arouter-compiler"]
+    compile config.dependencies["event-bus"]
+    compile config.dependencies["gson"]
+}
