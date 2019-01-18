@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 //1. 定义 config 变量
 def config = rootProject.ext
 
@@ -44,4 +45,9 @@ dependencies {
     if (isNeedMineModule.toBoolean()) {
         compile project(":module_mine")
     }
+
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+
 }

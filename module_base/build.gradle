@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
 
 //1. 定义 config 变量
 def config = rootProject.ext
@@ -43,6 +44,11 @@ dependencies {
     //在基础组件中，需要导入路由的运行期、编译期依赖库。
     compile config.dependencies["arouter-api"]
     annotationProcessor config.dependencies["arouter-compiler"]
-    compile config.dependencies["event-bus"]
-    compile config.dependencies["gson"]
+    implementation config.dependencies["event-bus"]
+    implementation config.dependencies["gson"]
+
+    // butterknife
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
 }
