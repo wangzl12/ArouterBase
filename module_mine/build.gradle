@@ -14,7 +14,7 @@ android {
     buildToolsVersion config.android.buildToolsVersion
 
     defaultConfig {
-        if (!isNeedHomeModule.toBoolean()) {
+        if (!isNeedMineModule.toBoolean()) {
             applicationId "com.wangzl.module_mine"
         }
         javaCompileOptions {
@@ -63,7 +63,7 @@ dependencies {
 
     //在业务组件中，需要导入路由的编译期依赖库、以及所有的基础组件。
     annotationProcessor config.dependencies["arouter-compiler"]
-    compile project(":module_base")
+    implementation project(":module_base")
 
     implementation 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
